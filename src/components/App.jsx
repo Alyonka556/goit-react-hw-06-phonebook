@@ -34,8 +34,10 @@ export const App = () => {
   };
 
   const getFilteredContacts = () => {
-    const filterContactsList = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+    const filterContactsList = contacts.filter(
+      contact =>
+        typeof contact.name === 'string' &&
+        contact.name.toLowerCase().includes(filter.toLowerCase())
     );
 
     return filterContactsList;
