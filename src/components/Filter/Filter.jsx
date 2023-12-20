@@ -1,6 +1,6 @@
 import { StyledBox, StyledLabel, StyledInput } from './Filter.styled';
 
-export const Filter = ({ filter, handleChange }) => (
+const Filter = ({ filter, handleChange }) => (
   <StyledBox>
     <StyledLabel>Find contacts by Name </StyledLabel>
     <StyledInput
@@ -12,3 +12,5 @@ export const Filter = ({ filter, handleChange }) => (
     />
   </StyledBox>
 );
+
+export default Filter;

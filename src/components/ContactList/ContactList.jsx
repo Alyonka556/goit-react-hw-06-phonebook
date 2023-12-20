@@ -1,6 +1,6 @@
 import { StyledButton, StyledItem, StyledList } from './ContactList.styled';
 
-export const ContactList = ({ contacts, handleDelete }) => (
+const ContactList = ({ contacts, handleDelete }) => (
   <div>
     <StyledList>
       {contacts.map((contact, id) => (
@@ -14,3 +14,5 @@ export const ContactList = ({ contacts, handleDelete }) => (
     </StyledList>
   </div>
 );
+
+export default ContactList;

@@ -1,46 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
+// import React, { useEffect, useState } from 'react';
+// import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
-import { ContactList } from './ContactList/ContactList';
-import { Filter } from './Filter/Filter';
+import ContactList from './ContactList/ContactList';
+import Filter from './Filter/Filter.jsx';
 
 import { StyledContainer, StyledTitle } from './App.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter } from '../redux/selector.js';
+import { addFilter } from '../redux/filterSlice';
+import { addContact, deleteContact } from '../redux/contactSlice';
 
 export const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    const savedContacts = localStorage.getItem('contacts');
-    if (savedContacts) {
-      setContacts(JSON.parse(savedContacts));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
 
   const handleChange = value => {
-    setFilter(value);
+    dispatch(addFilter(value));
   };
 
   const handleSubmit = ({ name, number }) => {
-    const id = nanoid();
-
     const contactExists = contacts.some(contact => contact.name === name);
 
     if (contactExists) {
       alert(`${name} is already in contacts.`);
     } else {
-      setContacts(prevContacts => [...prevContacts, { id, name, number }]);
+      dispatch(addContact(name, number));
     }
   };
 
   const handleDelete = id => {
-    setContacts(prevContacts =>
-      prevContacts.filter(contact => contact.id !== id)
-    );
+    dispatch(deleteContact(id));
   };
 
   const getFilteredContacts = () => {
